@@ -1,0 +1,119 @@
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+April 05, 2023 - 13:15:36
+Django version 4.1, using settings 'mysite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Error: That port is already in use.
+[05/Apr/2023 13:17:00] "GET /polls HTTP/1.1" 301 0
+[05/Apr/2023 13:18:04] "GET /polls HTTP/1.1" 301 0
+[05/Apr/2023 13:18:06] "GET /polls HTTP/1.1" 301 0
+[05/Apr/2023 13:18:23] "GET /polls/ HTTP/1.1" 200 40
+[05/Apr/2023 13:30:31] "GET /polls/ HTTP/1.1" 200 40
+[05/Apr/2023 13:37:42] "GET /polls/ HTTP/1.1" 200 40
+[05/Apr/2023 13:37:44] "GET /polls/ HTTP/1.1" 200 40
+[05/Apr/2023 13:37:45] "GET /polls/ HTTP/1.1" 200 40
+[05/Apr/2023 13:37:46] "GET /polls/ HTTP/1.1" 200 40
+[06/Apr/2023 03:39:02] "GET /polls/ HTTP/1.1" 200 40
+[06/Apr/2023 03:42:15] "GET /polls/ HTTP/1.1" 200 40
+[06/Apr/2023 04:08:31] "GET /polls HTTP/1.0" 301 0
+[06/Apr/2023 04:08:31] "GET /polls/ HTTP/1.0" 200 40
+/home/laish/mysite/mysite/settings.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+April 05, 2023 - 13:16:19
+Django version 4.1, using settings 'mysite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Traceback (most recent call last):
+  File "/home/laish/mysite/manage.py", line 22, in <module>
+    main()
+  File "/home/laish/mysite/manage.py", line 18, in main
+    execute_from_command_line(sys.argv)
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/core/management/__init__.py", line 446, in execute_from_command_line
+    utility.execute()
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/core/management/__init__.py", line 386, in execute
+    settings.INSTALLED_APPS
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/conf/__init__.py", line 92, in __getattr__
+    self._setup(name)
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/conf/__init__.py", line 79, in _setup
+    self._wrapped = Settings(settings_module)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/conf/__init__.py", line 233, in __init__
+    raise ValueError("Incorrect timezone setting: %s" % self.TIME_ZONE)
+ValueError: Incorrect timezone setting: UTC+8
+Watching for file changes with StatReloader
+[12/Apr/2023 13:06:39] "GET /polls HTTP/1.1" 301 0
+[12/Apr/2023 13:07:04] "GET /polls HTTP/1.0" 301 0
+[12/Apr/2023 13:07:04] "GET /polls/ HTTP/1.0" 200 40
+/home/laish/mysite/mysite/settings.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+April 12, 2023 - 13:06:10
+Django version 4.1, using settings 'mysite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+Exception in thread django-main-thread:
+Traceback (most recent call last):
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/threading.py", line 1038, in _bootstrap_inner
+    self.run()
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/threading.py", line 975, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/utils/autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/core/management/commands/runserver.py", line 125, in inner_run
+    autoreload.raise_last_exception()
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/utils/autoreload.py", line 87, in raise_last_exception
+    raise _exception[1]
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/core/management/__init__.py", line 398, in execute
+    autoreload.check_errors(django.setup)()
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/utils/autoreload.py", line 64, in wrapper
+    fn(*args, **kwargs)
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/__init__.py", line 24, in setup
+    apps.populate(settings.INSTALLED_APPS)
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/apps/registry.py", line 91, in populate
+    app_config = AppConfig.create(entry)
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/apps/config.py", line 178, in create
+    mod = import_module(mod_path)
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1206, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1142, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'polls.app'
+/home/laish/mysite/mysite/settings.py changed, reloading.
+Watching for file changes with StatReloader
+/home/laish/mysite/polls/models.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+April 12, 2023 - 19:38:57
+Django version 4.1, using settings 'mysite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
+/home/laish/mysite/polls/models.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+April 12, 2023 - 19:46:43
+Django version 4.1, using settings 'mysite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Watching for file changes with StatReloader
