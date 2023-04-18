@@ -117,3 +117,73 @@ Django version 4.1, using settings 'mysite.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[18/Apr/2023 16:18:05] "GET /polls/ HTTP/1.0" 200 40
+[18/Apr/2023 16:43:09] "GET /polls/ HTTP/1.0" 200 40
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[18/Apr/2023 16:57:02] "GET /polls/ HTTP/1.0" 200 40
+Invalid HTTP_HOST header: '34.134.152.224:8000'. You may need to add '34.134.152.224' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/http/request.py", line 148, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '34.134.152.224:8000'. You may need to add '34.134.152.224' to ALLOWED_HOSTS.
+Bad Request: /polls/
+[18/Apr/2023 16:57:08] "GET /polls/ HTTP/1.1" 400 63382
+Invalid HTTP_HOST header: '34.134.152.224:8000'. You may need to add '34.134.152.224' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/http/request.py", line 148, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '34.134.152.224:8000'. You may need to add '34.134.152.224' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[18/Apr/2023 16:57:10] "GET /favicon.ico HTTP/1.1" 400 63160
+Invalid HTTP_HOST header: '34.134.152.224:8000'. You may need to add '34.134.152.224' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/http/request.py", line 148, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '34.134.152.224:8000'. You may need to add '34.134.152.224' to ALLOWED_HOSTS.
+Bad Request: /
+[18/Apr/2023 16:57:39] "GET / HTTP/1.1" 400 63096
+Invalid HTTP_HOST header: '34.134.152.224:8000'. You may need to add '34.134.152.224' to ALLOWED_HOSTS.
+Traceback (most recent call last):
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/utils/deprecation.py", line 135, in __call__
+    response = self.process_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/middleware/common.py", line 48, in process_request
+    host = request.get_host()
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/laish/anaconda3/envs/djenv/lib/python3.11/site-packages/django/http/request.py", line 148, in get_host
+    raise DisallowedHost(msg)
+django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: '34.134.152.224:8000'. You may need to add '34.134.152.224' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+[18/Apr/2023 16:57:41] "GET /favicon.ico HTTP/1.1" 400 63154
