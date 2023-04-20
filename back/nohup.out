@@ -421,3 +421,4 @@ Django version 4.1, using settings 'mysite.settings'
 Starting development server at http://0.0.0.0:8080/
 Quit the server with CONTROL-C.
 Watching for file changes with StatReloader
+Watching for file changes with StatReloader
