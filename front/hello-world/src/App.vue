@@ -1,6 +1,7 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <button @click="increment">count is: {{ count }}</button>
 </template>
 
 <script>
@@ -10,6 +11,16 @@ export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  data() {
+      return {
+          count: 0
+      }
+  },
+  methods: {
+      increment() {
+          this.count++
+      }
   }
 }
 </script>
