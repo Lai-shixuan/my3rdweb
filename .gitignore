@@ -1,10 +1,7 @@
 .DS_Store
-vue3-md-blog/.idea
-vue3-md-blog/node_modules
+.idea/
+node_modules/
 dist
-.idea
-front/.idea
-front/hello-world/node_modules
 
 # local env files
 .env.local
@@ -23,5 +20,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-*.py[cod]
+*.pyc
 *nohup.out
