@@ -4,6 +4,7 @@ vue3-md-blog/node_modules
 dist
 .idea
 front/.idea
+front/hello-world/node_modules
 
 # local env files
 .env.local
