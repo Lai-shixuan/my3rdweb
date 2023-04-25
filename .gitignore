@@ -1,1 +1,24 @@
+.DS_Store
+vue3-md-blog/.idea
+vue3-md-blog/node_modules
+dist
 .idea
+front/.idea
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
