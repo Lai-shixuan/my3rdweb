@@ -18,5 +18,28 @@ public class Main {
         double x = 24.3;
         double y = -22;
         System.out.println(cut4pieces(x, y));
+        Dog abc = new Dog();
+        Dog def = new Dog();
+        def.size = 80;
+        Dog bigger = abc.Sizemaxdog(def);
+        System.out.println(bigger.size);
     }
+
+   public static class Dog{
+        int size = 30;
+        static int name = 40;
+
+        public int Sizemax(){
+            if (name > 20)
+                return 10;
+            return 20;
+       }
+
+       public Dog Sizemaxdog(Dog otherdog){
+            if (size > otherdog.size)
+                return this;
+            return otherdog;
+       }
+   }
+
 }
