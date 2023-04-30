@@ -1,4 +1,12 @@
-for x in [1,2,3]:
-   print(x)
+class ABC:
+    size = 0
 
-x = 'abc'
+
+c1 = ABC()
+c2 = c1
+
+c1.size = 10
+print(c2.size)
+
+c1 = 1
+print(c1)

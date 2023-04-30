@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
@@ -22,7 +25,15 @@ public class Main {
         Dog def = new Dog();
         def.size = 80;
         Dog bigger = abc.Sizemaxdog(def);
-        System.out.println(bigger.size);
+        System.out.println(abc);
+
+        int[] arr1 = new int[10];
+        arr1[0] = 1;
+        arr1[1] = 2;
+        System.out.println(arr1);
+
+        Integer c1 = new Integer(10);
+        System.out.println(c1);
     }
 
    public static class Dog{
