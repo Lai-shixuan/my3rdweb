@@ -10,3 +10,5 @@ print(c2.size)
 
 c1 = 1
 print(c1)
+
+a = [1, "a"]

@@ -1,5 +1,5 @@
 <template>
-  <a href="blogs/first-blog.html">Look at my 手撸 html page</a>
+  <a href="../blogs/first-blog.html">Look at my 手撸 html page</a>
   <PatchMeta />
   <div id="app-wrapper">
 
