@@ -1,25 +1,25 @@
 <template>
-  <a href="../blogs/first-blog.html">Look at my 手撸 html page</a>
-  <PatchMeta />
-  <div id="app-wrapper">
+    <a href="../blogs/first-blog.html" style="color: red; text-align: center">Look at my 手撸 html page</a>
+    <PatchMeta />
+    <div id="app-wrapper">
 
-    <NavBar :title="'📝 vue3-md-blog'" :sections="blogSections" />
+        <NavBar :title="'📝 vue3-md-blog'" :sections="blogSections" />
 
-    <div>
-      <Suspense>
-        <template #default>
-          <router-view />
-        </template>
+        <div>
+            <Suspense>
+                <template #default>
+                    <router-view />
+                </template>
 
-        <template #fallback>
-          <Loader />
-        </template>
-      </Suspense>
+                <template #fallback>
+                    <Loader />
+                </template>
+            </Suspense>
+        </div>
+
+        <Footer />
+
     </div>
-
-    <Footer />
-
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -35,8 +35,8 @@ const blogSections = inject('blogSections', {})
 
 <style scoped>
 #app-wrapper {
-  height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
 </style>
