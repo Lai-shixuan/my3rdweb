@@ -18,9 +18,11 @@ public class ListExercisesTest {
     public void testSum() {
         List<Integer> lst1 = List.of(1, 2, 3, 4);
         List<Integer> lst2 = new ArrayList<>();
+        List<Integer> lst3 = List.of(2, 3, 4, 5);
 
         assertThat(ListExercises.sum(lst1)).isEqualTo(10);
         assertThat(ListExercises.sum(lst2)).isEqualTo(0);
+        assertThat(ListExercises.sum(lst3)).isEqualTo(14);
     }
 
     @Test

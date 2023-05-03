@@ -5,15 +5,15 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public  static int cut4pieces(double x, double y){
-       if (x == 0 || y == 0)
-           return 0;
-       else if (x > 0) {
-           if (y > 0)
-               return 1;
-           else return 4;
-       }else if (y > 0)
-           return 2;
-       else return 3;
+        if (x == 0 || y == 0)
+            return 0;
+        else if (x > 0) {
+            if (y > 0)
+                return 1;
+            else return 4;
+        }else if (y > 0)
+            return 2;
+        else return 3;
     }
     public static void main(String[] args) {
         // Press Alt+Enter with your caret at the highlighted text to see how
@@ -46,7 +46,7 @@ public class Main {
 
     }
 
-   public static class Dog{
+    public static class Dog{
         int size = 30;
         static int name = 40;
 
@@ -54,13 +54,13 @@ public class Main {
             if (name > 20)
                 return 10;
             return 20;
-       }
+        }
 
-       public Dog Sizemaxdog(Dog otherdog){
+        public Dog Sizemaxdog(Dog otherdog){
             if (size > otherdog.size)
                 return this;
             return otherdog;
-       }
-   }
+        }
+    }
 
 }
