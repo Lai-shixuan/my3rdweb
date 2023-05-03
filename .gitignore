@@ -2,6 +2,7 @@
 .idea/
 node_modules/
 dist
+Java&Algorithms/library-sp23-main
 
 # local env files
 .env.local
