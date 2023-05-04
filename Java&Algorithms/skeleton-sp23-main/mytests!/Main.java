@@ -15,6 +15,24 @@ public class Main {
             return 2;
         else return 3;
     }
+
+    public static class Dog{
+        int size = 30;
+        static int name = 40;
+
+        public int Sizemax(){
+            if (name > 20)
+                return 10;
+            return 20;
+        }
+
+        public Dog Sizemaxdog(Dog otherdog){
+            if (size > otherdog.size)
+                return this;
+            return otherdog;
+        }
+    }
+
     public static void main(String[] args) {
         // Press Alt+Enter with your caret at the highlighted text to see how
         // IntelliJ IDEA suggests fixing it.
@@ -42,25 +60,5 @@ public class Main {
         char a = 'a';
         char b = (char)((int)a + 1);
         System.out.println(b);
-
-
     }
-
-    public static class Dog{
-        int size = 30;
-        static int name = 40;
-
-        public int Sizemax(){
-            if (name > 20)
-                return 10;
-            return 20;
-        }
-
-        public Dog Sizemaxdog(Dog otherdog){
-            if (size > otherdog.size)
-                return this;
-            return otherdog;
-        }
-    }
-
 }
