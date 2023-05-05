@@ -3,6 +3,7 @@
 node_modules/
 dist
 Java&Algorithms/library-sp23-main
+data/
 
 # local env files
 .env.local
