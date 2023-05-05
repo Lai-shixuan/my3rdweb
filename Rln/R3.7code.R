@@ -15,6 +15,11 @@ colnames(datalg) <- c("trt", "rep", "number")
 datalg_aov <- aov(number ~ trt, datalg)
 summary(datalg_aov)
 
+temp <- summary(datalg_aov)
+temp[[1]]$`Mean Sq`
+
+
+
 # 均值并作图
 ag <- aggregate(number ~ trt, datalg, mean)
 windows()
@@ -38,7 +43,6 @@ MSTrt <- SSTrt / (a-1)
 MSE <- SSE / (N-a)
 
 LSD <- qt(1-0.05/2, N-a) * sqrt(2 * MSE / n)
-LSD
 LSD.test(datalg_aov, "trt", group = FALSE, console = TRUE)
 
 # 正态假设
