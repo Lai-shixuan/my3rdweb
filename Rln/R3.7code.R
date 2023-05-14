@@ -2,6 +2,7 @@
 library(reshape2)
 library(agricolae)
 library(ggplot2)
+library(FrF2)
 
 # AOV
 data <- matrix(c(3129, 3000, 2865, 2890,
