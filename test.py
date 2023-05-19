@@ -37,10 +37,20 @@ def hello():
 
 hello()
 
-#%%
+# %%
 import torch
 import pandas as pd
 
 pt1 = torch.load("DL/hw2/data/libriphone/libriphone/feat/train/19-198-0008.pt")
 pt2 = torch.load("DL/hw2/data/libriphone/libriphone/feat/test/19-198-0037.pt")
 doc1 = pd.read_csv("DL/hw2/data/libriphone/libriphone/train_labels.csv")
+
+
+# %%
+def func(x: 'parax', y: (1, 10), z: float) -> float:
+    return x * y * z
+
+
+# %%
+for i in range(5):
+    print(i)
