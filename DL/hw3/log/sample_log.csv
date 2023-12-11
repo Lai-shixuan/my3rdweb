@@ -464,3 +464,4 @@ fold,mode,Epoch = 100,Loss,Acc,Note
 0,val,064,16.41848,-1.40293,
 0,train,065,11.02537,-1.21006,
 0,val,065,15.10264,-1.21032,
+fold,mode,Epoch = 30,Loss,Acc,Note

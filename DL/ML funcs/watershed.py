@@ -37,7 +37,9 @@ ws = watershed(-distance, labels, mask=thresh)
 
 ws = np.where(ws > 0, 255, 0).astype(np.uint8)
 
-cv2.imwrite("d:\\9-mysitewin\\DL\\a.jpg", ws)
+ws = 255-ws
+
+cv2.imwrite("segmented-watershed.jpg", ws)
 
 # 展示结果
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(12, 6),

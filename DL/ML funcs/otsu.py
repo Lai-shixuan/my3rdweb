@@ -1,6 +1,5 @@
 from PIL import Image
 import numpy as np
-import sklearn
 
 def calculate_histogram(image):
     histogram = np.zeros(256)
