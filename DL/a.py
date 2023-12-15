@@ -1,5 +1,4 @@
-import torch
+import numpy as np
 
-test = torch.rand([1, 2, 3])
-print(test.ndim)
-print(test)
+print(np.array([[1, 2, 3], [2, 4, 6]])[:, 2])
+

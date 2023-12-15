@@ -6,7 +6,7 @@ from PIL import Image
 import pyvista as pv
 
 def read_and_resize_images(img_folder, resize_dims):
-    img_files = sorted([os.path.join(img_folder, f) for f in os.listdir(img_folder) if f.endswith('.png') or f.endswith('.jpg')])
+    img_files = sorted([os.path.join(img_folder, f) for f in os.listdir(img_folder) if f.endswith('.png') or f.endswith('.png')])
     img_data = []
 
     for img_file in img_files:
@@ -38,7 +38,8 @@ def visualize_3d_tensor(tensor):
     plotter.show()
 
 img_folder = "d:/9-mysitewin/DL/ML funcs/data/result/"
-resize_dims = (1000, 1000)
+resize_dims = (100, 100)
 
 tensor = read_and_resize_images(img_folder, resize_dims)
+print(1)
 visualize_3d_tensor(tensor)
