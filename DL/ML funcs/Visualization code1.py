@@ -5,18 +5,32 @@ import numpy as np
 from PIL import Image
 import pyvista as pv
 
-def read_and_resize_images(img_folder, resize_dims):
-    img_files = sorted([os.path.join(img_folder, f) for f in os.listdir(img_folder) if f.endswith('.png') or f.endswith('.png')])
+
+def read_and_resize_images(folder, size):
+    img_files = sorted([os.path.join(folder, f) for f in os.listdir(folder)
+                        if f.endswith('.png')])
     img_data = []
 
     for img_file in img_files:
         img = Image.open(img_file)
-        img = img.resize(resize_dims, Image.BICUBIC)
-        img_array = np.array(img.convert('L')) > 0
+        if size != (0, 0):
+            img = img.resize(size, Image.BICUBIC)
+
+        # Create a new image with a black background
+        background = Image.new('RGBA', img.size, (0, 0, 0, 255))
+
+        # Paste the original image onto the background
+        background.paste(img, mask=img.split()[3])  # 3 is the alpha channel
+
+        # Convert back to grayscale (L mode) while keeping the black background
+        background = background.convert('L')
+
+        img_array = np.array(background) > 0
         img_data.append(img_array)
 
     img_tensor = np.array(img_data)
     return img_tensor
+
 
 def visualize_3d_tensor(tensor):
     # Create the spatial reference
@@ -32,14 +46,14 @@ def visualize_3d_tensor(tensor):
 
     # Create a plotter object and set the scalars to the Z height
     plotter = pv.Plotter()
-    plotter.add_mesh(mesh, color="lightblue", show_edges=False, opacity=1)
+    plotter.add_mesh(mesh, show_edges=False, opacity=1)
 
     # Display the plotter
     plotter.show()
 
+
 img_folder = "d:/9-mysitewin/DL/ML funcs/data/result/"
-resize_dims = (100, 100)
+resize_dims = (0, 0)
 
 tensor = read_and_resize_images(img_folder, resize_dims)
-print(1)
 visualize_3d_tensor(tensor)
