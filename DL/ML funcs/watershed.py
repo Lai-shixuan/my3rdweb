@@ -4,6 +4,7 @@ from skimage.feature import peak_local_max
 from skimage.segmentation import watershed
 from scipy import ndimage
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 
 path = 'd:\GoogleDrive\\04 microCT土壤\\20231026 2次组会\\30μm-ROI36mm\q1.1 (315).bmp'
 
@@ -35,9 +36,9 @@ labels = ndimage.label(labels)[0]
 # 应用分水岭算法
 ws = watershed(-distance, labels, mask=thresh)
 
-ws = np.where(ws > 0, 255, 0).astype(np.uint8)
+# ws = np.where(ws > 0, 255, 0).astype(np.uint8)
 
-ws = 255-ws
+# ws = 255-ws
 
 cv2.imwrite("segmented-watershed.jpg", ws)
 
@@ -51,6 +52,36 @@ ax[0].set_title('Original Image')
 
 ax[1].imshow(ws, cmap=plt.cm.gray)
 ax[1].set_title('Segmented Image')
+
+for a in ax:
+    a.set_axis_off()
+
+fig.tight_layout()
+plt.show()
+
+# Apply a color map to the segmented image
+# 'nipy_spectral' is a good choice for segmentation, but you can choose others
+colored_ws = mcolors.Normalize()(ws)
+colored_ws = plt.cm.nipy_spectral(colored_ws)
+
+# Convert from RGBA to BGR format for OpenCV
+colored_ws = cv2.cvtColor((colored_ws * 255).astype(np.uint8), cv2.COLOR_RGBA2BGR)
+
+# Save the colorized segmented image
+cv2.imwrite("segmented-watershed-colored.jpg", colored_ws)
+
+# Display the results
+fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(18, 6), sharex=True, sharey=True)
+ax = axes.ravel()
+
+ax[0].imshow(image, cmap=plt.cm.gray)
+ax[0].set_title('Original Image')
+
+ax[1].imshow(ws, cmap=plt.cm.gray)
+ax[1].set_title('Segmented Image')
+
+ax[2].imshow(colored_ws)
+ax[2].set_title('Colorized Segmented Image')
 
 for a in ax:
     a.set_axis_off()
