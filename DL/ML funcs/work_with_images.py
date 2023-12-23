@@ -4,7 +4,7 @@ from sklearn.cluster import KMeans
 from sklearn.mixture import GaussianMixture
 import cv2
 import os
-import method_NonParameter as nonPM
+from functions import method_NonParameter as nonPM
 
 
 def method_choose(text):
