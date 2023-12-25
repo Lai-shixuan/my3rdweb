@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Folder Picker</title>
+    <style>
+        #images-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .image-box {
+            margin: 0 10px;
+            text-align: center;
+        }
+        img {
+            max-width: 300px;
+            max-height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Electron Image Processor</h1>
+<button id="select-folder">Select Folder</button>
+
+<div id="images-container">
+    <div class="image-box">
+        <h2>Original Image</h2>
+        <img id="original-image">
+    </div>
+    <div class="image-box">
+        <h2>Rotated Image</h2>
+        <img id="rotated-image">
+    </div>
+</div>
+
+<button id="download-button" style="display: none;">Download Rotated Image</button>
+
+<script src="renderer.js"></script>
+</body>
+</html>
