@@ -1,33 +1,20 @@
 from PIL import Image
 import numpy as np
-from sklearn.cluster import KMeans
-from sklearn.mixture import GaussianMixture
 import cv2
 import os
-from functions import method_NonParameter as nonPM
+from functions import method_PositionIndependent as mPI
+import pandas as pd
 
 
 def method_choose(text):
     if text == 'kmeans':
-        return kmeans
+        return mPI.kmeans
     elif text == 'gmm':
-        return gmm
+        return mPI.gmm
     elif text == 'otsu':
-        return nonPM.otsu
+        return mPI.otsu
     elif text == 'kapur_entropy':
-        return nonPM.kapur_entropy
-
-
-def kmeans(numbers):
-    kmeans_filter = KMeans(n_clusters=2, random_state=0).fit(numbers)
-    classes = kmeans_filter.labels_
-    return classes
-
-
-def gmm(numbers):
-    gmm_filter = GaussianMixture(n_components=2, random_state=0).fit(numbers)
-    pixels_gmm = gmm_filter.predict(numbers)
-    return pixels_gmm
+        return mPI.kapur_entropy
 
 
 # other functions
@@ -68,6 +55,9 @@ def work_with_images(input_folder, output_folder, radius, method_name):
         # 调用函数进行图像分割，输入和输出的像素都是0-1之间
         segmentor = method_choose(method_name)
         segmented_number = segmentor(pixels)
+
+        df = pd.DataFrame({'Pixels': pixels.flatten(), 'Segmented number': segmented_number})
+        df.to_csv(output_folder + f'\\_{i}_{method_name}.csv', index=False)
 
         # 进行替换，将分类后的标签数据重新回填到原始图片中
         counter = 0

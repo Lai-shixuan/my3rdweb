@@ -1,5 +1,8 @@
 import cv2
 import numpy as np
+from sklearn.cluster import KMeans
+from sklearn.mixture import GaussianMixture
+
 
 # non-parameter methods
 def otsu(numbers):
@@ -49,3 +52,15 @@ def kapur_entropy(image):
     _, thresholded_image = cv2.threshold(image, optimal_threshold, 255, cv2.THRESH_BINARY)
 
     return thresholded_image.flatten()/255
+
+
+def kmeans(numbers):
+    kmeans_filter = KMeans(n_clusters=2, random_state=0).fit(numbers)
+    classes = kmeans_filter.labels_
+    return classes
+
+
+def gmm(numbers):
+    gmm_filter = GaussianMixture(n_components=2, random_state=0).fit(numbers)
+    pixels_gmm = gmm_filter.predict(numbers)
+    return pixels_gmm

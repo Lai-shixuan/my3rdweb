@@ -1,90 +1,82 @@
-import cv2
 import numpy as np
-from skimage.feature import peak_local_max
-from skimage.segmentation import watershed
-from scipy import ndimage
-import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
+import cv2
 
-path = 'd:\GoogleDrive\\04 microCT土壤\\20231026 2次组会\\30μm-ROI36mm\q1.1 (315).bmp'
+def generate_random_colors(num_colors):
+    return np.random.randint(0, 255, size=(num_colors, 3))
 
-# 读取图像并转化为灰度图像
-image = cv2.imread(path)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# Step 1: Read the image
+image = cv2.imread('D:\9-mysitewin\DL\ML funcs\data\origin\q1.1 (315).bmp', 0)  # Read the image in grayscale
 
-# 创建掩码，只保留图像中心的圆形区域
-height, width = gray.shape
-center_x, center_y = width // 2, height // 2
-mask = np.zeros_like(gray)
-cv2.circle(mask, (center_x, center_y), min(center_x, center_y), color=255, thickness=-1)
+# Step 2: Preprocess the image
+# Apply Gaussian blur to reduce noise
+blur = cv2.GaussianBlur(image, (5, 5), 0)
 
-# 应用掩码并进行阈值化
-gray = cv2.bitwise_and(gray, mask)
-ret, thresh = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+# Step 3: Thresholding
+ret, thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
-# 计算距离变换
-distance = ndimage.distance_transform_edt(thresh)
+# Step 4: Finding sure background and foreground areas
+# Noise removal (optional)
+kernel = np.ones((2, 2), np.uint8)
+opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=1)
 
-# 获取局部最大值
-coordinates = peak_local_max(distance, labels=thresh, min_distance=20)
+# Sure background area
+sure_bg = cv2.dilate(opening, kernel, iterations=1)
 
-# 为每一个局部最大值创建标签
-labels = np.zeros(distance.shape, dtype=bool)
-labels[coordinates[:, 0], coordinates[:, 1]] = 1
-labels = ndimage.label(labels)[0]
+# Finding sure foreground area
+dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, 5)
+ret, sure_fg = cv2.threshold(dist_transform, 0.01*dist_transform.max(), 255, 0)
 
-# 应用分水岭算法
-ws = watershed(-distance, labels, mask=thresh)
+# Finding unknown region
+sure_fg = np.uint8(sure_fg)
+unknown = cv2.subtract(sure_bg, sure_fg)
+# cv2.imshow('unknown Image', unknown)
 
-# ws = np.where(ws > 0, 255, 0).astype(np.uint8)
+# Step 5: Applying the Watershed Algorithm
+# Marker labelling
+ret, markers = cv2.connectedComponents(sure_fg)
 
-# ws = 255-ws
+# Add one to all labels so that sure background is not 0, but 1
+markers = markers + 1
 
-cv2.imwrite("segmented-watershed.jpg", ws)
+# Now, mark the region of unknown with zero
+markers[unknown == 255] = 0
 
-# 展示结果
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(12, 6),
-                         sharex=True, sharey=True)
-ax = axes.ravel()
+# Apply the watershed algorithm
+markers = cv2.watershed(cv2.cvtColor(image, cv2.COLOR_GRAY2BGR), markers)
 
-ax[0].imshow(image, cmap=plt.cm.gray)
-ax[0].set_title('Original Image')
+# Step 6: Identify the largest area (background)
+unique, counts = np.unique(markers, return_counts=True)
+background_marker = unique[np.argmax(counts[1:]) + 1]  # Ignore the first count (background)
 
-ax[1].imshow(ws, cmap=plt.cm.gray)
-ax[1].set_title('Segmented Image')
+# Step 7: Colorize the markers
+# Generate random colors for each marker
+num_markers = np.max(markers)
+colors = generate_random_colors(num_markers + 1)
+# colors[background_marker] = [0, 0, 0]  # Set background color to black
+colors[background_marker] = [255, 255, 255]  # Set background color to black
 
-for a in ax:
-    a.set_axis_off()
+# Create an image to display the colors
+output = np.zeros_like(cv2.cvtColor(image, cv2.COLOR_GRAY2BGR))
 
-fig.tight_layout()
-plt.show()
+for marker in range(num_markers + 1):
+    # output[markers == marker] = colors[marker]
+    if marker != background_marker:
+        output[markers == marker] = [0, 0, 0]
+    if marker == background_marker:
+        output[markers == marker] = [255, 255, 255]
 
-# Apply a color map to the segmented image
-# 'nipy_spectral' is a good choice for segmentation, but you can choose others
-colored_ws = mcolors.Normalize()(ws)
-colored_ws = plt.cm.nipy_spectral(colored_ws)
+# Step 8: Display the Result
+cv2.imshow('Segmented Image', output)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
-# Convert from RGBA to BGR format for OpenCV
-colored_ws = cv2.cvtColor((colored_ws * 255).astype(np.uint8), cv2.COLOR_RGBA2BGR)
+# Step 9: Save the Result
+cv2.imwrite('color_segmented_image.jpg', output)
 
-# Save the colorized segmented image
-cv2.imwrite("segmented-watershed-colored.jpg", colored_ws)
+# Step 8: Display the Result
+cv2.imshow('Segmented Image', output)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
-# Display the results
-fig, axes = plt.subplots(nrows=1, ncols=3, figsize=(18, 6), sharex=True, sharey=True)
-ax = axes.ravel()
-
-ax[0].imshow(image, cmap=plt.cm.gray)
-ax[0].set_title('Original Image')
-
-ax[1].imshow(ws, cmap=plt.cm.gray)
-ax[1].set_title('Segmented Image')
-
-ax[2].imshow(colored_ws)
-ax[2].set_title('Colorized Segmented Image')
-
-for a in ax:
-    a.set_axis_off()
-
-fig.tight_layout()
-plt.show()
+# Step 9: Save the Result
+cv2.imwrite('color_segmented_image.jpg', output)
