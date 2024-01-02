@@ -8,7 +8,7 @@ from sklearn.mixture import GaussianMixture
 def otsu(numbers):
     numbers_8u = np.uint8(numbers)
     _, dst = cv2.threshold(numbers_8u, 0, 255, cv2.THRESH_OTSU)
-    return dst / 255
+    return dst
 
 
 def kapur_entropy(image):
@@ -51,18 +51,18 @@ def kapur_entropy(image):
     # Apply threshold to the image
     _, thresholded_image = cv2.threshold(image, optimal_threshold, 255, cv2.THRESH_BINARY)
 
-    return thresholded_image.flatten()/255
+    return thresholded_image.flatten()
 
 
 def kmeans(numbers):
     numbers = numbers / 255
     kmeans_filter = KMeans(n_clusters=2, random_state=0).fit(numbers)
     classes = kmeans_filter.labels_
-    return classes
+    return classes * 255
 
 
 def gmm(numbers):
     numbers = numbers / 255
     gmm_filter = GaussianMixture(n_components=2, random_state=0).fit(numbers)
     pixels_gmm = gmm_filter.predict(numbers)
-    return pixels_gmm
+    return pixels_gmm * 255
