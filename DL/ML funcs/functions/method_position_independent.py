@@ -6,14 +6,14 @@ from sklearn.mixture import GaussianMixture
 
 # non-parameter methods
 def otsu(numbers):
-    numbers_8u = np.uint8(numbers * 255)
+    numbers_8u = np.uint8(numbers)
     _, dst = cv2.threshold(numbers_8u, 0, 255, cv2.THRESH_OTSU)
     return dst / 255
 
 
 def kapur_entropy(image):
     # Calculate histogram of the image
-    image = np.uint8(image * 255)
+    image = np.uint8(image)
     hist = cv2.calcHist([image], [0], None, [256], [0, 256]).ravel()
     hist = hist / hist.sum()
 
@@ -55,12 +55,14 @@ def kapur_entropy(image):
 
 
 def kmeans(numbers):
+    numbers = numbers / 255
     kmeans_filter = KMeans(n_clusters=2, random_state=0).fit(numbers)
     classes = kmeans_filter.labels_
     return classes
 
 
 def gmm(numbers):
+    numbers = numbers / 255
     gmm_filter = GaussianMixture(n_components=2, random_state=0).fit(numbers)
     pixels_gmm = gmm_filter.predict(numbers)
     return pixels_gmm

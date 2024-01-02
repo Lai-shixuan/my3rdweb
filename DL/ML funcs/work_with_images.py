@@ -1,9 +1,8 @@
-from PIL import Image
 import numpy as np
 import cv2
 import os
-from functions import method_PositionIndependent as mPI
-from functions import method_PositionDepentent as mPD
+from functions import method_position_independent as mpi
+from functions import method_position_dependent as mpd
 import configparser
 import math
 
@@ -12,15 +11,15 @@ import pandas as pd
 
 def method_choose(text):
     if text == 'kmeans':
-        return mPI.kmeans
+        return mpi.kmeans
     elif text == 'gmm':
-        return mPI.gmm
+        return mpi.gmm
     elif text == 'otsu':
-        return mPI.otsu
+        return mpi.otsu
     elif text == 'kapur_entropy':
-        return mPI.kapur_entropy
+        return mpi.kapur_entropy
     elif text == 'watershed':
-        return mPD.watershed
+        return mpd.watershed
 
 
 # Read a grayscale img, give it a transparent layer. It doesn't cut the image.
@@ -46,15 +45,12 @@ def pi_integrate_images(input_folder, radius):
 
     for img_file in img_files:
         # 加载图像并转换为灰度
-        image = Image.open(img_file)
-        width, height = image.size
-        image = image.crop((width // 2 - radius, height // 2 - radius, width // 2 + radius, height // 2 + radius))
-        width, height = image.size
-        image_np = np.array(image)
+        image = cv2.imread(img_file, cv2.IMREAD_GRAYSCALE)
+        width, height = image.shape
+        img = image[(height // 2 - radius):(height // 2 + radius), (width // 2 - radius):(width // 2 + radius)]
 
         # 移除中心圆形区域以外的黑色像素，圆心为(width/2, height/2)，半径为min(width, height)/2
-        image = remove_black_pixels(image_np)
-
+        image = remove_black_pixels(img)
         stacked.append(image)
 
     stacked = np.array(stacked)
@@ -65,7 +61,7 @@ def pi_segment(images, name):
     # 调整数组形状以适应KMeans函数，并归一化值
     image_reshaped = images.reshape(-1, 2)
     index = image_reshaped[:, 1] == 255
-    image_shrink = image_reshaped[index] / 255.0
+    image_shrink = image_reshaped[index]
     pixels = image_shrink[:, 0].reshape(-1, 1)
 
     # 调用函数进行图像分割，输入和输出的像素都是0-1之间
@@ -95,7 +91,8 @@ def pd_segment(path, radius):
         img = cv2.imread(img_file, cv2.IMREAD_GRAYSCALE)
         height, width = img.shape
         img = img[(height // 2 - radius):(height // 2 + radius), (width // 2 - radius):(width // 2 + radius)]
-        img = mPD.watershed(img)
+
+        img = mpd.watershed(img)
         stacked.append(img)
 
     stacked = np.array(stacked)
