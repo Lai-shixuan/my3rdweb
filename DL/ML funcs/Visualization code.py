@@ -5,19 +5,18 @@ import numpy as np
 import cv2
 import pyvista as pv
 import configparser
-import math
 
 
-def read_and_resize_images(folder, size, method_name, ROI):
+def read_and_resize_images(folder, size, method_name, radius):
     img_files = sorted([os.path.join(folder, f) for f in os.listdir(folder)
-                        if (f.endswith('.png') and method_name in f and str(ROI) in f)])
+                        if (f.endswith('.png') and method_name in f and str(radius) in f)])
     img_data = []
 
     for img_file in img_files:
         img = cv2.imread(img_file)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         # if size != '(0, 0)':
-            # img = img.resize(size, Image.BICUBIC)
+        # img = img.resize(size, Image.BICUBIC)
 
         img_array = np.array(img) > 0
         img_data.append(img_array)
@@ -46,7 +45,7 @@ def visualize_3d_tensor(tensor):
     height = tensor.shape[0]
     width = tensor.shape[1]
     length = tensor.shape[2]
-    bounds = (0, height, 0, width, 0, length)   # xMin, xMax, yMin, yMax, zMin, zMax
+    bounds = (0, height, 0, width, 0, length)  # xMin, xMax, yMin, yMax, zMin, zMax
     cube = pv.Box(bounds=bounds, level=0)
     plotter.add_mesh(cube, style='wireframe', color='blue')
     plotter.show_axes()
