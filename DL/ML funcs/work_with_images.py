@@ -4,6 +4,7 @@ import os
 from functions import method_position_independent as mpi
 from functions import method_position_dependent as mpd
 import configparser
+from tqdm import tqdm
 
 import pandas as pd
 
@@ -45,7 +46,7 @@ def segment(images, name, dependent):
     segmentor = method_choose(name)
 
     if dependent:
-        for i in range(images.shape[0]):
+        for i in tqdm(range(images.shape[0])):
             images[i] = segmentor(images[i])
     else:
         # 调整数组形状以适应KMeans函数，并归一化值
@@ -61,9 +62,9 @@ def segment(images, name, dependent):
 def export_images(images, path, radius):
     for i, image in enumerate(images):
 
-        # 控制孔隙用哪一个标签表示
-        if np.sum(image) / 255 / (radius ** 2 * 4) > 0.5:
-            image = 255 - image
+        # # 控制孔隙用哪一个标签表示
+        # if np.sum(image) / 255 / (radius ** 2 * 4) > 0.5:
+        #     image = 255 - image
 
         cv2.imwrite(path + '\\' + str(radius) + '_' + method_name
                     + '_segmented' + f"{i:04d}" + '.png', image)

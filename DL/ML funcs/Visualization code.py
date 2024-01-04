@@ -9,24 +9,34 @@ import configparser
 
 def read_and_resize_images(folder, size, method_name, radius):
     img_files = sorted([os.path.join(folder, f) for f in os.listdir(folder)
-                        if (f.endswith('.png') and method_name in f and str(radius) in f)])
+                        if (f.endswith('.png') and method_name in f and f.startswith(str(radius)))])
     img_data = []
 
+    side_length = int(size)
+
+    i = 0
+
     for img_file in img_files:
+        i = i+1
+        if i > 20:
+            break
+
         img = cv2.imread(img_file)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        # if size != '(0, 0)':
-        # img = img.resize(size, Image.BICUBIC)
+        if side_length != 0:
+            img = cv2.resize(img, (side_length, side_length), interpolation=cv2.INTER_LINEAR)
 
         img_array = np.array(img) > 0
         img_data.append(img_array)
 
     img_tensor = np.array(img_data)
+    img_tensor = ~img_tensor
     return img_tensor
 
 
 def visualize_3d_tensor(tensor):
     # Create the spatial reference
+    # tensor = tensor
     grid = pv.StructuredGrid(*np.mgrid[0:tensor.shape[0]:complex(tensor.shape[0]),
                               0:tensor.shape[1]:complex(tensor.shape[1]),
                               0:tensor.shape[2]:complex(tensor.shape[2])])
@@ -39,7 +49,7 @@ def visualize_3d_tensor(tensor):
 
     # Create a plotter object and set the scalars to the Z height
     plotter = pv.Plotter()
-    plotter.add_mesh(mesh, show_edges=False, opacity=1)
+    plotter.add_mesh(mesh, scalars="values", show_edges=False, opacity=1)
 
     # Add a cube frame
     height = tensor.shape[0]
