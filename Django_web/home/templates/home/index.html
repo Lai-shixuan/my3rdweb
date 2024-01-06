@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        My main web!
+    </title>
+</head>
+<body>
+    <p>links:</p>
+<!--    <a href="{% url 'hello:hello_index' %}">view hello!</a>-->
+    <ul>
+        {% for link, name in links %}
+            <li><a href = "{{link}}">{{ name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
