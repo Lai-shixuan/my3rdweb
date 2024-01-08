@@ -1,0 +1,46 @@
+{
+  "name": "ct_visual_front",
+  "version": "1.0.0",
+  "homepage": ".",
+  "main": "public/electron.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "electron": "electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "ct_visual_front",
+    "productName": "ct_visual_front",
+    "files": [
+      "public/electron.js",
+      "build/**/*"
+    ],
+    "win": {
+      "icon": "./src/icon.ico"
+    }
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "electron-is-dev": "^2.0.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^3.5.1"
+  },
+  "devDependencies": {
+    "electron": "^28.1.1",
+    "electron-builder": "^24.9.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

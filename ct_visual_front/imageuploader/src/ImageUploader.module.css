@@ -1,0 +1,19 @@
+/* src/components/ImageUploader.module.css */
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+    margin-top: 20px;
+}
+
+.imageSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    max-width: 300px; /* 或者任何适合的大小 */
+    max-height: 300px;
+    margin-bottom: 20px;
+}
