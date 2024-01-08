@@ -1,4 +1,3 @@
-// electron.js
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -15,7 +14,7 @@ function createWindow() {
     win.loadURL(
         isDev
             ? 'http://localhost:3000' // React web server, to be used in development. ? means if
-            : `file://${path.join(__dirname, '../build/index.html')}` // means else, load the file
+            : `file://${path.join(__dirname, './build/index.html')}` // means else, load the file
     );
 }
 

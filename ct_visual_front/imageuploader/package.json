@@ -2,7 +2,7 @@
   "name": "ct_visual_front",
   "version": "1.0.0",
   "homepage": ".",
-  "main": "public/electron.js",
+  "main": "main-electron.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -13,9 +13,10 @@
     "appId": "ct_visual_front",
     "productName": "ct_visual_front",
     "files": [
-      "public/electron.js",
-      "build/**/*"
+      "build/**/*",
+      "main-electron.js"
     ],
+    "extends": null,
     "win": {
       "icon": "./src/icon.ico"
     }
