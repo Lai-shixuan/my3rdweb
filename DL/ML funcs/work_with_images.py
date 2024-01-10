@@ -5,8 +5,11 @@ from functions import method_position_independent as mpi
 from functions import method_position_dependent as mpd
 import configparser
 from tqdm import tqdm
+import threading
+import time
 
 import pandas as pd
+from datetime import datetime
 
 
 def method_choose(text):
@@ -39,24 +42,43 @@ def integrate_images(input_folder, radius):
         stacked.append(img)
 
     stacked = np.array(stacked)
+    print('The images are integrated.')
     return stacked
 
 
 def segment(images, name, dependent):
+    global stop_thread
     segmentor = method_choose(name)
+
+    print('Ready to segment the images.')
+
+    result_images = np.zeros_like(images)
 
     if dependent:
         for i in tqdm(range(images.shape[0])):
-            images[i] = segmentor(images[i])
+            result_images[i] = segmentor(images[i])
     else:
         # 调整数组形状以适应KMeans函数，并归一化值
-        image_reshaped = images.reshape(-1, 1)
-        segmented_number = segmentor(image_reshaped)
-        images = segmented_number.reshape(images.shape)
+        indicator_thread = threading.Thread(target=show_running_time)
+        indicator_thread.daemon = True
+        indicator_thread.start()
 
-    # df = pd.DataFrame({'Pixels': pixels.flatten(), 'Segmented number': segmented_number})
-    # df.to_csv(output_folder + f'\\_{i}_{method_name}.csv', index=False)
-    return images
+        segmented_number = segmentor(images)
+        result_images = segmented_number.reshape(images.shape)
+
+    # Only for pandas export to examine whether the independent method
+    # is single threshold or not
+    pixels = images.reshape([-1, ])
+    global output_path
+    now = datetime.now()
+    dt_string = now.strftime("%d%m%Y_%H%M%S")
+    df = pd.DataFrame({'Pixels': pixels, 'Segmented number': result_images.reshape([-1, ])})
+    df.to_csv(f'{output_path}\\{method_name}_{dt_string}.csv', index=False)
+
+    print('Segmentation is finished.')
+    stop_thread = True
+
+    return result_images
 
 
 def export_images(images, path, radius):
@@ -70,6 +92,16 @@ def export_images(images, path, radius):
                     + '_segmented' + f"{i:04d}" + '.png', image)
 
 
+def show_running_time():
+    global stop_thread
+    start_time = time.time()
+    while not stop_thread:
+        duration = time.time() - start_time
+        print(f'The segmentation has spent {duration:.0f}s of time', end='\r', flush=True)
+        time.sleep(5)
+
+
+stop_thread = False
 config = configparser.ConfigParser()
 config.read('config.ini')
 input_path = config['DEFAULT']['input_path']
@@ -81,6 +113,10 @@ if method_name == 'watershed':
 else:
     method_dependent = False
 
+print(f'The input path is {input_path}')
+print(f'The output path is {output_path}')
+print(f'The method name is {method_name}')
+print(f'The radius is {ROI}')
 stacked_images = integrate_images(input_path, ROI)
 segmented_images = segment(stacked_images, method_name, method_dependent)
 export_images(segmented_images, output_path, ROI)
