@@ -6,6 +6,7 @@ Java&Algorithms/library-sp23-main
 data/
 Dataset/
 build/
+.ipynb_checkpoints/
 
 # local env files
 .env.local

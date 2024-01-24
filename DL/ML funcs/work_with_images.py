@@ -1,28 +1,14 @@
 import numpy as np
 import cv2
 import os
-from functions import method_position_independent as mpi
-from functions import method_position_dependent as mpd
 import configparser
 from tqdm import tqdm
 import threading
 import time
+from functions.method_choose import seg_method_choose
 
 import pandas as pd
 from datetime import datetime
-
-
-def method_choose(text):
-    if text == 'kmeans':
-        return mpi.kmeans
-    elif text == 'gmm':
-        return mpi.gmm
-    elif text == 'otsu':
-        return mpi.otsu
-    elif text == 'kapur_entropy':
-        return mpi.kapur_entropy
-    elif text == 'watershed':
-        return mpd.watershed
 
 
 # The first thing is to read and merge all images.
@@ -32,11 +18,14 @@ def integrate_images(input_folder, radius):
 
     stacked = []
 
-    for img_file in img_files:
+    for i, img_file in enumerate(img_files):
         # 加载图像并转换为灰度
+
         image = cv2.imread(img_file, cv2.IMREAD_GRAYSCALE)
-        width, height = image.shape
-        img = image[(height // 2 - radius):(height // 2 + radius), (width // 2 - radius):(width // 2 + radius)]
+        # width, height = image.shape
+        # img = image[(height // 2 - radius):(height // 2 + radius), (width // 2 - radius):(width // 2 + radius)]
+        # img = image[(490 - radius):(490 + radius), (390 - radius):(390 + radius)]
+        img = image
 
         # image = remove_black_pixels(img)
         stacked.append(img)
@@ -46,34 +35,34 @@ def integrate_images(input_folder, radius):
     return stacked
 
 
-def segment(images, name, dependent):
+def segment(images, name):
     global stop_thread
-    segmentor = method_choose(name)
+    segmentor, independent = seg_method_choose(name)
 
     print('Ready to segment the images.')
 
     result_images = np.zeros_like(images)
 
-    if dependent:
+    if not independent:
         for i in tqdm(range(images.shape[0])):
             result_images[i] = segmentor(images[i])
     else:
-        # 调整数组形状以适应KMeans函数，并归一化值
         indicator_thread = threading.Thread(target=show_running_time)
         indicator_thread.daemon = True
         indicator_thread.start()
 
+        # 3D images is the input, and [-1, ] array are output
         segmented_number = segmentor(images)
         result_images = segmented_number.reshape(images.shape)
 
     # Only for pandas export to examine whether the independent method
     # is single threshold or not
     pixels = images.reshape([-1, ])
-    global output_path
-    now = datetime.now()
-    dt_string = now.strftime("%d%m%Y_%H%M%S")
-    df = pd.DataFrame({'Pixels': pixels, 'Segmented number': result_images.reshape([-1, ])})
-    df.to_csv(f'{output_path}\\{method_name}_{dt_string}.csv', index=False)
+    # global output_path
+    # now = datetime.now()
+    # dt_string = now.strftime("%d%m%Y_%H%M%S")
+    # df = pd.DataFrame({'Pixels': pixels, 'Segmented number': result_images.reshape([-1, ])})
+    # df.to_csv(f'{output_path}\\{method_name}_{dt_string}.csv', index=False)
 
     print('Segmentation is finished.')
     stop_thread = True
@@ -108,17 +97,13 @@ input_path = config['DEFAULT']['input_path']
 ROI = int(config['DEFAULT']['ROI'])
 method_name = config['DEFAULT']['method_name']
 output_path = config['DEFAULT']['output_path']
-if method_name == 'watershed':
-    method_dependent = True
-else:
-    method_dependent = False
 
 print(f'The input path is {input_path}')
 print(f'The output path is {output_path}')
 print(f'The method name is {method_name}')
 print(f'The radius is {ROI}')
 stacked_images = integrate_images(input_path, ROI)
-segmented_images = segment(stacked_images, method_name, method_dependent)
+segmented_images = segment(stacked_images, method_name)
 export_images(segmented_images, output_path, ROI)
 
 # Below is something not going to use it.

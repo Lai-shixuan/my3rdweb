@@ -4,15 +4,20 @@ from sklearn.cluster import KMeans
 from sklearn.mixture import GaussianMixture
 
 
+def origin(numbers):
+    return numbers.reshape([-1, ])
+
+
 # non-parameter methods
-def otsu(numbers):
+def otsu_3d(numbers):
     numbers = numbers.reshape(-1, 1)
     numbers_8u = np.uint8(numbers)
     _, dst = cv2.threshold(numbers_8u, 0, 255, cv2.THRESH_OTSU)
+    dst.reshape(numbers.shape)
     return dst
 
 
-def kapur_entropy(image):
+def kapur_entropy_3d(image):
     # Calculate histogram of the image
     image = image.reshape(-1, 1)
     image = np.uint8(image)
@@ -25,6 +30,7 @@ def kapur_entropy(image):
     # Initialize variables
     max_ent = 0.0
     optimal_threshold = 0.0
+    small_value = 1e-5
 
     t_list = []
 
@@ -36,11 +42,13 @@ def kapur_entropy(image):
         if omega_a > 0.01 and 1 - omega_a > 0.01:
             t_list.append(t)
 
+    hist = np.where(hist == 0, small_value, hist)
+
     for t in t_list:
         omega_a = cum_sum[t]
         omega_b = cum_sum[-1] - omega_a
         # Calculate entropy
-        entropy_a = -np.sum(hist[t_list[0]:t+1] / omega_a * np.log(hist[t_list[0]:t+1] / omega_a))
+        entropy_a = -np.sum(hist[t_list[0]:t] / omega_a * np.log(hist[t_list[0]:t] / omega_a))
         entropy_b = -np.sum(hist[t+1:t_list[-1]] / omega_b * np.log(hist[t+1:t_list[-1]] / omega_b))
         total_entropy = entropy_a + entropy_b
         entropy_list.append([t, total_entropy])
@@ -56,15 +64,15 @@ def kapur_entropy(image):
     return threshold_image.flatten()
 
 
-def kmeans(numbers):
+def kmeans_3d(numbers):
     numbers = numbers.reshape(-1, 1)
     numbers = numbers / 255
-    kmeans_filter = KMeans(n_clusters=2, random_state=0).fit(numbers)
+    kmeans_filter = KMeans(n_clusters=2, random_state=0, n_init=10).fit(numbers)
     classes = kmeans_filter.labels_
     return classes * 255
 
 
-def gmm(numbers):
+def gmm_3d(numbers):
     numbers = numbers.reshape(-1, 1)
     numbers = numbers / 255
     gmm_filter = GaussianMixture(n_components=2, random_state=0).fit(numbers)
