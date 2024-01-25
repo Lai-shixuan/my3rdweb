@@ -2,12 +2,9 @@ import cv2
 import os
 import glob
 
-# folder_path = 'd:/15_Datas_in_papers/temp/origin/'
-folder_path = 'd:/15_Datas_in_papers/7_nnUNet/nnUNet_raw/Dataset002_test200/imagesTr/0118/'
-
 
 # Function to convert BMP images to PNG format
-def convert_bmp_to_png():
+def convert_bmp_to_png(folder_path):
     search_path = os.path.join(folder_path, '*.bmp')
     bmp_files = glob.glob(search_path)
 
@@ -19,7 +16,7 @@ def convert_bmp_to_png():
 
 
 # Function to convert images to binary format
-def convert_to_binary():
+def convert_to_binary(folder_path):
     search_path = os.path.join(folder_path, '*.png')
     png_files = glob.glob(search_path)
 
@@ -35,7 +32,7 @@ def convert_to_binary():
 
 
 # Function to convert binary images to grayscale
-def binary_to_grayscale():
+def binary_to_grayscale(folder_path):
     search_path = os.path.join(folder_path, '*.png')
     binary_files = glob.glob(search_path)
 
@@ -52,8 +49,9 @@ def binary_to_grayscale():
 
 # Main function to select and run a specific conversion
 def main():
-    global folder_path
-    folder_path = input("Enter the common folder path: ")
+    # folder_path = 'd:/15_Datas_in_papers/7_nnUNet/nnUNet_raw/Dataset002_test200/imagesTr/0118/'
+    folder_path = 'd:/15_Datas_in_papers/temp/result/'
+    print(f"This is your input output directory: {folder_path}")
 
     print("Select the operation:")
     print("1: Convert BMP to PNG")
@@ -63,11 +61,11 @@ def main():
     choice = input("Enter your choice (1/2/3): ")
 
     if choice == '1':
-        convert_bmp_to_png()
+        convert_bmp_to_png(folder_path)
     elif choice == '2':
-        convert_to_binary()
+        convert_to_binary(folder_path)
     elif choice == '3':
-        binary_to_grayscale()
+        binary_to_grayscale(folder_path)
     else:
         print("Invalid choice!")
 

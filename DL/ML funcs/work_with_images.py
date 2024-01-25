@@ -24,8 +24,7 @@ def integrate_images(input_folder, radius):
         image = cv2.imread(img_file, cv2.IMREAD_GRAYSCALE)
         # width, height = image.shape
         # img = image[(height // 2 - radius):(height // 2 + radius), (width // 2 - radius):(width // 2 + radius)]
-        # img = image[(490 - radius):(490 + radius), (390 - radius):(390 + radius)]
-        img = image
+        img = image[(430 - radius):(430 + radius), (450 - radius):(450 + radius)]
 
         # image = remove_black_pixels(img)
         stacked.append(img)
