@@ -5,7 +5,7 @@ from django.urls import reverse
 
 def get_names():
     html_files = [f.split('.')[0] for f in os.listdir('hello/templates/hello')
-                  if f.endswith('.html')]
+                  if f.endswith('.html') and (not f.endswith('index.html'))]
     return html_files
 
 
