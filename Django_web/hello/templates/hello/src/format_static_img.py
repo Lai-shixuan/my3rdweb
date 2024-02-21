@@ -35,6 +35,6 @@ def convert_img_src_to_django_static(html_file, output_file):
         file.write(str(soup))
 
 
-html_file_path = '../硬盘选购前置知识-传输速度与接口.html'  # 指定的 HTML 文件路径
-output_file_path = '../硬盘选购前置知识-传输速度与接口.html'  # 指定的 HTML 文件路径
+html_file_path = '../AI 绘画发展历史和 SD.html'  # 指定的 HTML 文件路径
+output_file_path = '../AI 绘画发展历史和 SD.html'  # 指定的 HTML 文件路径
 convert_img_src_to_django_static(html_file_path, output_file_path)
