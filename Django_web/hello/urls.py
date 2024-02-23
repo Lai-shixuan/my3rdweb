@@ -4,6 +4,7 @@ from . import views
 html_files = views.get_names()
 app_name = 'hello'
 
+
 # The page below is article index page, and with some sub links.
 urlpatterns = [path('', views.index, name='articles_index')]
 
