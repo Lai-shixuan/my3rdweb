@@ -30,11 +30,22 @@ def convert_img_src_to_django_static(html_file, output_file):
             new_src = "{% static '" + src + "' %}"
             img['src'] = new_src
 
+    # Find all <a> tags that might contain document links
+    a_tags = soup.find_all('a')
+
+    for a in a_tags:
+        href = a.get('href')
+        # Check if href matches the specific pattern for .docx, .xlsx, or .png files within the "attachment" directory
+        if re.match(r'attachment\\.*\.(docx|xlsx)$', href):
+            # Replace href attribute with Django's static file path format
+            new_href = "{% static '" + href + "' %}"
+            a['href'] = new_href
+
     # 将修改后的 HTML 内容写入到新文件或覆盖原文件
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(str(soup))
 
 
-html_file_path = '../AI 绘画发展历史和 SD.html'  # 指定的 HTML 文件路径
-output_file_path = '../AI 绘画发展历史和 SD.html'  # 指定的 HTML 文件路径
+html_file_path = '../国有控股企业名单.html'  # 指定的 HTML 文件路径
+output_file_path = '../国有控股企业名单.html'  # 指定的 HTML 文件路径
 convert_img_src_to_django_static(html_file_path, output_file_path)
